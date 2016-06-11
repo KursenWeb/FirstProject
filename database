@@ -1,0 +1,27 @@
+/*
+MySQL Backup
+Source Server Version: 5.5.5
+Source Database: kursen -> nama databasenya
+Date: 6/11/2016 08:30:05
+*/
+
+
+-- ----------------------------
+--  Table structure for `contact`
+-- ----------------------------
+DROP TABLE IF EXISTS `contact`;
+CREATE TABLE `contact` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `phone` decimal(13,0) NOT NULL,
+  `remarks` text NOT NULL,
+  `datereceive` datetime NOT NULL,
+  `status` char(1) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Records 
+-- ----------------------------
+INSERT INTO `contact` VALUES ('1','adityas@gmail.com','adit','948509345034','test','2016-06-11 03:06:53','D'),  ('2','adityas@gmail.com','adit','325252523','test','2016-06-11 03:07:22','D'),  ('3','adityas@gmail.com','adit','2342342342342','mau buat web aku bang','2016-06-11 03:21:05','D'),  ('4','adityas@gmail.com','adit','39802934','test','2016-06-11 03:27:01','D'),  ('5','adityas@gmail.com','adit','2342342342342','tet','2016-06-11 03:28:40','D');

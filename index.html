@@ -22,7 +22,9 @@
  -->
     <!-- Bootstrap -->
     <link href="Content/css/bootstrap.css" rel="stylesheet">
-
+	<link href="Content/css/alertify.min.css" rel="stylesheet">
+	<link href="Content/css/default.min.css" rel="stylesheet">
+	
     <!-- Font awesome -->
     <link href="Content/css/font-awesome.min.css" rel="stylesheet">
 
@@ -92,7 +94,7 @@
                         </ul>
                     </li-->
                     <li>
-                        <a href="#about">About us</a>
+                        <a href="#about">Tentang</a>
                     </li>
                     <li>
                         <a href="#team">Tim</a>
@@ -114,12 +116,6 @@
                     </li-->
                     <li>
                         <a href="#contacts">Kontak</a>
-                    </li>
-								
-								<li>
-								
-					   <a href="#contactss">0812 000 000</a>
-								
                     </li>
                 </ul>
             </div>
@@ -929,7 +925,7 @@
             </p>
         </div>
         <div class="form-contacts-wrapper col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
-            <form class="form-contacts" method="POST" action="controller/savekontak.php" id="kontak-frm">
+            <form class="form-contacts" method="POST" action="Controller/savecontact.php" id="kontak-frm" autocomplete="off">
                 <div class="form-group">
                     <input class="form-control input-lg" id="id-email" name="email" placeholder="Masukkan email anda" type="email">
                 </div>
@@ -937,19 +933,19 @@
                     <input class="form-control input-lg" id="id-name" name="name" placeholder="Masukkan nama lengkap anda" type="text">
                 </div>
 				 <div class="form-group">
-                    <input class="form-control input-lg" id="id-phone" name="phone" placeholder="Masukkan nomor telepon anda yang bisa kami hubungi" type="text">
+                    <input class="form-control input-lg" id="id-phone" name="phone" placeholder="Masukkan nomor telepon anda yang bisa kami hubungi" type="text" maxlength="13">
                 </div>
                 <div class="form-group">
-                    <textarea placeholder="Apa yang dapat kami bantu untuk bisnis atau project anda" class="form-control input-lg"></textarea>
+                    <textarea name="remarks" placeholder="Apa yang dapat kami bantu untuk bisnis atau project anda" class="form-control input-lg"></textarea>
                 </div>
 				<div class="form-group">
-					<img id="captcha" src="content/img/captcha.png" class="col-sm-offset-4" alt="gambar"> 
+					<img id="captcha" src="captcha.php" class="col-sm-offset-4" alt="gambar"> 
 				</div>
 				<div class="form-group" id="captchagroup">
 					<input class="form-control input-lg" id="id-captcha" name="captchatext" placeholder="Masukkan teks di atas" maxlength="6" type="text">
 				</div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary"><i class="fa fa-send"></i> Kirim</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-send"></i> Kirim</button>
                 </div>
             </form>
         </div>
@@ -1049,26 +1045,23 @@
         </div>
     </div>
 </div>
-<!-- /.footer -->
-    <div class="footer-bottom">
-        <div class="container">
-			Copyright &copy; 2016 - 2017 Kursen | Developed by Kursen | Proudly powered by bootstrap
-        </div>
-    </div>
-</div>
-<!-- /.footer -->
+
 
 </div>
 <!-- /.wrapper -->
 
-<!-- Javascript libs -->
-<script type="text/javascript" async="" src="Scripts/js/watch.js"></script><script src="Scripts/js/jquery.min.js"></script>
+<!-- Javascript libs --><script src="Scripts/js/jquery.min.js"></script>
+
+<script type="text/javascript" async="" src="Scripts/js/watch.js"></script>
 <script src="Scripts/js/bootstrap.min.js"></script>
+<script src="Scripts/js/bootstrapValidator.min.js"></script>
+<script src="Scripts/js/alertify.min.js"></script>
+
 <script src="Scripts/js/owl.carousel.min.js"></script>
 
 <!-- Phlorence javascript -->
 <script src="Scripts/js/phlorence.js"></script>
-<script src="Scripts/js/bootstrapValidator.min.js"></script>
+
 <script type='text/javascript'>
 	$(document).ready(function(){
 		$('#kontak-frm').bootstrapValidator({
@@ -1123,12 +1116,20 @@
 						}
 
 					},
-					captchatext:
+					remarks:{
 						validators:{
-							notEmpty{
+							notEmpty: {
+								message: 'Silahkan isi apa yang bisa kami bantu untuk anda'
+							}
+						}
+					},
+					captchatext:{
+						validators:{
+							notEmpty: {
 								message: 'Silahkan isi dengan teks diatas'
 							}
 						}
+					}
 				}
 			}).on('success.form.bv', function (e) {
         // Prevent form submission
@@ -1154,8 +1155,8 @@
 							alertify.error('Captcha Salah');
 						}else{
 							console.log('Gagal mengirim ke email');
-							$('#captchagroup').removeClass('has-error').find('input').val('');;
-							$('#kontak-frm').bootstrapValidator('resetForm',true);
+							$('#captchagroup').removeClass('has-error').find('input').val('');
+							//$('#kontak-frm').bootstrapValidator('resetForm',true);
 							alertify.success('Data berhasil dikirim');
 						}
 						return false;
@@ -1164,9 +1165,10 @@
 						alertify.alert("Kesalahan! ","Error !!"+xhr.status+" "+textStatus+" "+errormessage);
 					},
 					complete: function () {
+						$('#kontak-frm').bootstrapValidator('resetForm',true);
 						$('#btnsubmit').removeAttr('disabled');
-						$('#kontak-frm input').removeAttr("disabled", "disabled");
-						$('#captcha').attr('src','controller/captcha.php');
+						$('#kontak-frm input').removeAttr("disabled");
+						$('#captcha').attr('src','captcha.php');
 					}
 				});
 		});
